@@ -23,7 +23,7 @@ namespace DCTTA.Mappers
                 currency.PriceChange,
                 currency.Markets.Convert(),
                 currency.BaseId,
-                currency.Rank)
+                currency.Rank, true)
                     ).ToList();
         }
         public static List<DCTTA.Models.Market> Convert(this List<ApiScraper.Models.Market> markets)

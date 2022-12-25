@@ -24,6 +24,7 @@ namespace DCTTA
     /// </summary>
     public partial class MainWindow : Window
     {
+        CurrenciesList mainFragment;
         public MainWindow()
         {
             InitializeComponent();
@@ -36,7 +37,21 @@ namespace DCTTA
                 return scraper.GetAll.Convert();
             });
             task.Start();
-            Container.Content = new CurrenciesList(task.Result);
+            mainFragment = new CurrenciesList(task.Result);
+            mainFragment.OnCurrencyDetailsShow += ShowDetails;
+            Container.Content = mainFragment;
+        }
+
+        private void ShowDetails(Currency currency)
+        {
+            var details = new CurrencyDetails(currency);
+            details.OnMainPageReturn += ReturnToMainPage;
+            Container.Content = details;
+        }
+
+        private void ReturnToMainPage()
+        {
+            Container.Content = mainFragment;
         }
     }
 }

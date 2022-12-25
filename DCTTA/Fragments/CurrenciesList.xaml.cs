@@ -27,17 +27,33 @@ namespace DCTTA.Fragments
         {
             InitializeComponent();
             Currencies = currencies;
+
             InitializeDataGrid();
         }
 
+
         private void InitializeDataGrid()
         {
+
+            for (int i = 10; i < Currencies.Count; i++)
+            {
+                Currencies[i].IsCurrencyVisible = false;
+            }
             CryptoCurrenciesDataGrid.ItemsSource = Currencies;
+
+
+
         }
-        Action<Currency> OnCurrencyDetailsShow { get; set; }
+        public Action<Currency> OnCurrencyDetailsShow { get; set; }
         private void ShowDetails_Click(object sender, RoutedEventArgs e)
         {
+            if (OnCurrencyDetailsShow == null)
+            {
+                MessageBox.Show("Хтось проспав ініцалізацію події що мала б показувати деталі по крипті, і хто ж це може бути ?");
+            }
             OnCurrencyDetailsShow.Invoke((Currency)CryptoCurrenciesDataGrid.CurrentItem);
         }
+
     }
+
 }

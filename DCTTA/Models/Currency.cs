@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace DCTTA.Models
 {
@@ -11,7 +12,7 @@ namespace DCTTA.Models
     /// </summary>
     public class Currency
     {
-        public Currency(string code, string name, decimal price, decimal volume, decimal priceChange, List<Market> markets, string baseId, int rank)
+        public Currency(string code, string name, decimal price, decimal volume, decimal priceChange, List<Market> markets, string baseId, int rank, bool isCurrencyVisible)
         {
             Code = code;
             Price = price;
@@ -21,6 +22,7 @@ namespace DCTTA.Models
             BaseId = baseId;
             Name = name;
             Rank = rank;
+            IsCurrencyVisible = isCurrencyVisible;
         }
 
         /// <summary>
@@ -55,5 +57,6 @@ namespace DCTTA.Models
         /// Ранг
         /// </summary>
         public int Rank { get; set; }
+        public bool IsCurrencyVisible { get; set; }
     }
 }
