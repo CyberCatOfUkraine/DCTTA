@@ -1,4 +1,8 @@
-﻿using System;
+﻿using ApiScraper.Scrapper;
+using DCTTA.Fragments;
+using DCTTA.Mappers;
+using DCTTA.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +27,16 @@ namespace DCTTA
         public MainWindow()
         {
             InitializeComponent();
+
+
+            Task<List<Currency>> task = new(() =>
+            {
+                CoinCapScraper scraper = new();
+                scraper.Initialize();
+                return scraper.GetAll.Convert();
+            });
+            task.Start();
+            Container.Content = new CurrenciesList(task.Result);
         }
     }
 }

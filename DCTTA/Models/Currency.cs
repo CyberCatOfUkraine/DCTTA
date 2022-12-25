@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ApiScraper.Models
+namespace DCTTA.Models
 {
     /// <summary>
     /// Деталі про криптовалюту
     /// </summary>
-    public class CryptocurrencyDetails
+    public class Currency
     {
-        public CryptocurrencyDetails(string code, string name, decimal price, decimal volume, decimal priceChange, List<Market> markets, string baseId, int rank)
+        public Currency(string code, string name, decimal price, decimal volume, decimal priceChange, List<Market> markets, string baseId, int rank)
         {
             Code = code;
             Price = price;

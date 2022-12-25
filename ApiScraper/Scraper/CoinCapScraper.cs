@@ -25,7 +25,7 @@ namespace ApiScraper.Scrapper
         }
         public List<CryptocurrencyDetails> GetAll => Cryptocurrencies;
 
-        public decimal Exchange(int value,CryptocurrencyDetails first, CryptocurrencyDetails second)
+        public decimal Exchange(int value, CryptocurrencyDetails first, CryptocurrencyDetails second)
         {
             decimal result = value * first.Price / second.Price;
             return result;
@@ -36,7 +36,8 @@ namespace ApiScraper.Scrapper
             if (Cryptocurrencies.Exists(x => x.Code == code))
             {
                 return Cryptocurrencies.Find(x => x.Code == code);
-            } else
+            }
+            else
                 return null;
         }
 
@@ -52,29 +53,29 @@ namespace ApiScraper.Scrapper
 
         public void UpdateCryptocurrenciesList()
         {
-           Cryptocurrencies= GetCryptocurrencyList();
-            
+            Cryptocurrencies = GetCryptocurrencyList();
+
         }
 
         private List<CryptocurrencyDetails> GetCryptocurrencyList()
         {
-           return TrasformToCryptocurrencyDetails(GetStringByUrl(Resources.Assets));
+            return TrasformToCryptocurrencyDetails(GetStringByUrl(Resources.Assets));
         }
 
         private List<CryptocurrencyDetails> TrasformToCryptocurrencyDetails(string text)
         {
             List<CryptocurrencyDetails> details = new();
-            var root= JsonConvert.DeserializeObject<CoinCapRoot>(text);
+            var root = JsonConvert.DeserializeObject<CoinCapRoot>(text);
             foreach (var coinCapDetails in root.data)
             {
                 details.Add(new CryptocurrencyDetails(
                     coinCapDetails.symbol,
                     coinCapDetails.name,
-                    Convert.ToDecimal(coinCapDetails.priceUsd.Replace(".",",")),
+                    Convert.ToDecimal(coinCapDetails.priceUsd.Replace(".", ",")),
                     Convert.ToDecimal(coinCapDetails.supply.Replace(".", ",")),
                     Convert.ToDecimal(coinCapDetails.changePercent24Hr.Replace(".", ",")),
                     GetMarketsByCryptoCurrencyName(coinCapDetails.id),
-                    coinCapDetails.id));
+                    coinCapDetails.id, Convert.ToInt32(coinCapDetails.rank)));
             }
             return details;
         }
@@ -83,10 +84,10 @@ namespace ApiScraper.Scrapper
             var result = new List<Market>();
 
             var marketsString = GetStringByUrl(Resources.MarketsByBaseID + cryptocurrencyId);
-            
-            var markets= JsonConvert.DeserializeObject<CoinCapMarketRoot>(marketsString).data;
 
-            foreach (var market in markets.Where(x=>x.priceUsd!="null"&&x.quoteSymbol.ToLower()=="usd"))
+            var markets = JsonConvert.DeserializeObject<CoinCapMarketRoot>(marketsString).data;
+
+            foreach (var market in markets.Where(x => x.priceUsd != "null" && x.quoteSymbol.ToLower() == "usd"))
             {
                 result.Add(new Market(market.exchangeId, Convert.ToDecimal(market.priceUsd.Replace(".", ","))));
             }
@@ -110,10 +111,10 @@ namespace ApiScraper.Scrapper
                     ChildNodes[4].
                     ChildNodes[0].
                     ChildNodes[0];
-                    var table=table1.
-                    ChildNodes[0].
-                    Attributes[0].
-                    Value;
+                var table = table1.
+                ChildNodes[0].
+                Attributes[0].
+                Value;
                 table = table.Substring(table.IndexOf("http"), table.IndexOf(";"));
                 if (table.Contains(";sa=U&a"))
                 {
@@ -136,6 +137,6 @@ namespace ApiScraper.Scrapper
             WebScraper webScraper = new();
             return webScraper.GetTextByUrl(url).Result;
         }
-        
+
     }
 }
