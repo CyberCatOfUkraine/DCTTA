@@ -93,6 +93,7 @@ namespace ApiScraper.Scrapper
             }
             return result;
         }
+        public string GetStringByUrl1(string url) => GetStringByUrl(url);
 
         public string GetMarketPage(string cryptocurrencyId, string exchangeId)
         {
@@ -100,9 +101,9 @@ namespace ApiScraper.Scrapper
 
             try
             {
-                url = GetStringByUrl("https://www.google.com/search?q=" + exchangeId + "+" + cryptocurrencyId + "+buy");
+                var tempUrl = GetStringByUrl(url);
                 HtmlDocument htmlDocument = new HtmlDocument();
-                htmlDocument.LoadHtml(url);
+                htmlDocument.LoadHtml(tempUrl);
                 var node = htmlDocument.DocumentNode;
                 var html = node.ChildNodes[1]
                     .ChildNodes[1].
@@ -134,8 +135,7 @@ namespace ApiScraper.Scrapper
         }
         private string GetStringByUrl(string url)
         {
-            WebScraper webScraper = new();
-            return webScraper.GetTextByUrl(url).Result;
+            return new WebScraper().GetTextByUrl(url);
         }
 
     }

@@ -9,14 +9,14 @@ namespace ApiScraper.Scrapper
     internal class WebScraper
     {
         private static readonly HttpClient client = new HttpClient();
-        public async Task<string> GetTextByUrl(string url)
+        public string GetTextByUrl(string url)
         {
             var result = string.Empty;
             try
             {
-                HttpResponseMessage response = await client.GetAsync(url);
+                HttpResponseMessage response = client.GetAsync(url).Result;
                 response.EnsureSuccessStatusCode();
-                result = await response.Content.ReadAsStringAsync();
+                result = response.Content.ReadAsStringAsync().Result;
             }
             catch (HttpRequestException e)
             {

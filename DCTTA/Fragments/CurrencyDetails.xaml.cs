@@ -1,19 +1,8 @@
 ﻿using DCTTA.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Policy;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace DCTTA.Fragments
 {
@@ -22,8 +11,7 @@ namespace DCTTA.Fragments
     /// </summary>
     public partial class CurrencyDetails : UserControl
     {
-        public Currency Currency { get; }
-
+        private Currency Currency { get; }
         public CurrencyDetails(Currency currency)
         {
             InitializeComponent();
@@ -40,6 +28,7 @@ namespace DCTTA.Fragments
                 var btn = new MarketButton(market.Name, currency.BaseId);
                 btn.Content = $"{market.Name} ціна:{market.Price}";
                 btn.Click += btn.MarketClick;
+                btn.Margin = new Thickness(10, 0, 10, 0);
                 MarketsPanel.Children.Add(btn);
             }
         }
@@ -64,47 +53,16 @@ namespace DCTTA.Fragments
 
         internal void MarketClick(object sender, RoutedEventArgs e)
         {
-            var url = "http://www.google.com/search?q=" + Name + "+" + CryptoCurrency + "+buy";
+            Task.Run(() =>
+            {
+                var url1 = "https://www.google.com/search?q=" + "binanceus" + "+" + "bitcoin" + "+buy";
 
-            /*
-             * Microsoft Edge - msedge
-             * Internet Explorer - iexplore
-             * Chrome - chrome
-             * Firefox - firefox
-             */
-            System.Diagnostics.Process.Start("explorer.exe", $"\"{url}\"");
-            /* try
-             {
-                 System.Diagnostics.Process.Start("msedge.exe", url);
-             }
-             catch (Exception)
-             {
+                var url = new ApiScraper.Scrapper.CoinCapScraper().GetMarketPage(CryptoCurrency, Name);
 
-                 try
-                 {
-                     System.Diagnostics.Process.Start("chrome.exe", url);
-                 }
-                 catch (Exception)
-                 {
+                System.Diagnostics.Process.Start("explorer.exe", $"\"{url}\"");
+            });
 
-                     try
-                     {
-                         System.Diagnostics.Process.Start("firefox.exe", url);
-                     }
-                     catch (Exception)
-                     {
-
-                         try
-                         {
-                             System.Diagnostics.Process.Start("iexplore.exe", url);
-                         }
-                         catch (Exception)
-                         {
-                             MessageBox.Show("Встановіть нормальний браузер і перейдіть за адресою: " + url);
-                         }
-                     }
-                 }
-             }*/
         }
+
     }
 }

@@ -22,8 +22,16 @@ Console.WriteLine(
     details.Volume + " : " +
     details.PriceChange
     );*/
-System.Diagnostics.Process.Start("iexplore.exe", "http://www.google.com/search?q=");
 
-Console.ReadKey();
+/*
+ * var url = "https://www.google.com/search?q=" + "binanceus" + "+" + "bitcoin" + "+buy";
+System.Diagnostics.Process.Start("explorer.exe", $"\"{url}\"");*/
+var url = new ApiScraper.Scrapper.CoinCapScraper().GetMarketPage("alterdice", "bitcoin");//.GetMarketPage(CryptoCurrency, Name);
+var url1 = new ApiScraper.Scrapper.CoinCapScraper().GetMarketPage("alterdice", "bitcoin");//.GetMarketPage(CryptoCurrency, Name);
+
+System.Diagnostics.Process.Start("explorer.exe", $"\"{url}\"");
+System.Diagnostics.Process.Start("explorer.exe", $"\"{url1}\"");
+
+//Console.ReadKey();
 
 

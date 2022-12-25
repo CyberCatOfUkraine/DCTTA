@@ -34,15 +34,7 @@ namespace DCTTA.Fragments
 
         private void InitializeDataGrid()
         {
-
-            for (int i = 10; i < Currencies.Count; i++)
-            {
-                Currencies[i].IsCurrencyVisible = false;
-            }
             CryptoCurrenciesDataGrid.ItemsSource = Currencies;
-
-
-
         }
         public Action<Currency> OnCurrencyDetailsShow { get; set; }
         private void ShowDetails_Click(object sender, RoutedEventArgs e)

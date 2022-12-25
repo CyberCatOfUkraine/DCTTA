@@ -9,7 +9,8 @@
     <Grid>
         <DataGrid Margin="5" VerticalScrollBarVisibility="Auto" Name="CryptoCurrenciesDataGrid" AutoGenerateColumns="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Назва"   Width="*" IsReadOnly="True" Binding="{Binding Path=BaseId}"/>
+                <DataGridTextColumn Header="Назва"   Width="*" IsReadOnly="True" Binding="{Binding Path=Name}"/>
+                <DataGridTextColumn Header="Код"    Width="*" IsReadOnly="True" Binding="{Binding Path=Code}"/>
                 <DataGridTextColumn Header="Ранг"    Width="*" IsReadOnly="True" Binding="{Binding Path=Rank}"/>
                 <DataGridTemplateColumn Header="Детальніше" MinWidth="120">
                     <DataGridTemplateColumn.CellTemplate>

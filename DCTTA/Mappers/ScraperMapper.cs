@@ -17,7 +17,7 @@ namespace DCTTA.Mappers
             return (from currency in currencies
                     select new DCTTA.Models.Currency(
                 currency.Code,
-                currency.Code,
+                currency.Name,
                 currency.Price,
                 currency.Volume,
                 currency.PriceChange,
