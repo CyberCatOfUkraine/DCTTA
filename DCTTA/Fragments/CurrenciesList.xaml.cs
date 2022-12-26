@@ -1,6 +1,7 @@
 ﻿using DCTTA.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,6 +22,8 @@ namespace DCTTA.Fragments
     /// </summary>
     public partial class CurrenciesList : UserControl
     {
+        private ViewModels.SearchViewModel _viewModel = new();
+
         public List<Currency> Currencies { get; }
 
         public CurrenciesList(List<Currency> currencies)
@@ -29,11 +32,30 @@ namespace DCTTA.Fragments
             Currencies = currencies;
 
             InitializeDataGrid();
+            _viewModel.PropertyChanged += TextChanged;
+            DataContext = _viewModel;
         }
 
+        private void TextChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            var searchViewModel = sender as ViewModels.SearchViewModel;
+            foreach (var item in Currencies)
+            {
+                if (item.Code.ToLower().Contains(searchViewModel.Text.ToLower()) || item.Name.ToLower().Contains(searchViewModel.Text.ToLower()))
+                {
+                    item.IsCurrencyVisible = true;
+                }
+                else
+                {
+                    item.IsCurrencyVisible = false;
+                }
+            }
+            InitializeDataGrid();
+        }
 
         private void InitializeDataGrid()
         {
+            CryptoCurrenciesDataGrid.ItemsSource = null;
             CryptoCurrenciesDataGrid.ItemsSource = Currencies;
         }
         public Action<Currency> OnCurrencyDetailsShow { get; set; }

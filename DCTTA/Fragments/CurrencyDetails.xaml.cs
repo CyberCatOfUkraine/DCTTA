@@ -55,7 +55,6 @@ namespace DCTTA.Fragments
         {
             Task.Run(() =>
             {
-                var url1 = "https://www.google.com/search?q=" + "binanceus" + "+" + "bitcoin" + "+buy";
 
                 var url = new ApiScraper.Scrapper.CoinCapScraper().GetMarketPage(CryptoCurrency, Name);
 

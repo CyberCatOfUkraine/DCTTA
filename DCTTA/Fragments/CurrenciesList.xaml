@@ -4,10 +4,29 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DCTTA.Fragments" xmlns:converters="clr-namespace:DCTTA.Converters"
+             xmlns:viewModel="clr-namespace:DCTTA.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800" MinHeight="450" MinWidth="800">
+    <UserControl.DataContext>
+        <viewModel:SearchViewModel/>
+    </UserControl.DataContext>
     <Grid>
-        <DataGrid Margin="5" VerticalScrollBarVisibility="Auto" Name="CryptoCurrenciesDataGrid" AutoGenerateColumns="False">
+        <Grid.RowDefinitions>
+            <RowDefinition MinHeight="60" Height="60"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="6*"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0">Введіть код чи назву:</Label>
+            <Border Grid.Column="1" Margin="10,0,30,0" BorderBrush="Black" BorderThickness="3" CornerRadius="2">
+                <TextBox x:Name="SearchTextBox" Margin="2" Text="{Binding Text, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+            </Border>
+        </Grid>
+        <DataGrid Grid.Row="1" Margin="5" VerticalScrollBarVisibility="Auto" Name="CryptoCurrenciesDataGrid" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Назва"   Width="*" IsReadOnly="True" Binding="{Binding Path=Name}"/>
                 <DataGridTextColumn Header="Код"    Width="*" IsReadOnly="True" Binding="{Binding Path=Code}"/>
