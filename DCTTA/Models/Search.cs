@@ -9,6 +9,5 @@ namespace DCTTA.Models
     internal class Search
     {
         public string Text { get; set; }
-        public Currency Currency { get; set; }
     }
 }

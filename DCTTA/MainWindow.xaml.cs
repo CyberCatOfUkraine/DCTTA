@@ -39,7 +39,15 @@ namespace DCTTA
             task.Start();
             mainFragment = new CurrenciesList(task.Result);
             mainFragment.OnCurrencyDetailsShow += ShowDetails;
+            mainFragment.OnConvert += ConvertCurrencies;
             Container.Content = mainFragment;
+        }
+
+        private void ConvertCurrencies(Currency currency, List<Currency> currencies)
+        {
+            var convert = new CurrencyConverting(currency, currencies);
+            convert.OnMainPageReturn += ReturnToMainPage;
+            Container.Content = convert;
         }
 
         private void ShowDetails(Currency currency)

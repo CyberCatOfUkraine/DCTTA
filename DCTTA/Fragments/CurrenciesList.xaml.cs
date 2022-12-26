@@ -67,7 +67,16 @@ namespace DCTTA.Fragments
             }
             OnCurrencyDetailsShow.Invoke((Currency)CryptoCurrenciesDataGrid.CurrentItem);
         }
+        public Action<Currency, List<Currency>> OnConvert;
+        private void Convert_Click(object sender, RoutedEventArgs e)
+        {
 
+            if (OnConvert == null)
+            {
+                MessageBox.Show("Хтось проспав ініцалізацію події що мала б конвертувати одну крипту в іншу, і хто ж це може бути ?");
+            }
+            OnConvert.Invoke((Currency)CryptoCurrenciesDataGrid.CurrentItem, Currencies);
+        }
     }
 
 }

@@ -93,8 +93,6 @@ namespace ApiScraper.Scrapper
             }
             return result;
         }
-        public string GetStringByUrl1(string url) => GetStringByUrl(url);
-
         public string GetMarketPage(string cryptocurrencyId, string exchangeId)
         {
             var url = "https://www.google.com/search?q=" + exchangeId + "+" + cryptocurrencyId + "+buy";

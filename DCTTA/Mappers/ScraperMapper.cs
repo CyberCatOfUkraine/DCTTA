@@ -34,5 +34,25 @@ namespace DCTTA.Mappers
             }
             return (from market in markets select new DCTTA.Models.Market(market.Name, market.Price)).ToList();
         }
+        public static List<ApiScraper.Models.Market> Convert(this List<DCTTA.Models.Market> markets)
+        {
+            if (markets == null)
+            {
+                return new();
+            }
+            return (from market in markets select new ApiScraper.Models.Market(market.Name, market.Price)).ToList();
+        }
+        public static ApiScraper.Models.CryptocurrencyDetails Convert(this DCTTA.Models.Currency currency)
+        {
+            return new(
+                currency.Code,
+                currency.Name,
+                currency.Price,
+                currency.Volume,
+                currency.PriceChange,
+                currency.Markets.Convert(),
+                currency.BaseId,
+                currency.Rank);
+        }
     }
 }
